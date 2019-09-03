@@ -16,15 +16,24 @@ module dashboard (full){
                     }
                 }
             }
-        }
-    translate([WIDTH/2,DEPTH/2,0]) {
-        rotate(90, v=[1,0,0]) {
-        rotate(90, v=[0,0,1]) {
-            intersection () {
-                cylinder(HEIGTH,HEIGTH,DEPTH,$fn=3);
+            
+        intersection () {        
+            translate([WIDTH/2,DEPTH/2,-HEIGTH/6]) {
+                rotate(90, v=[1,0,0]) {
+                rotate(90, v=[0,0,1]) {
+                    cylinder(DEPTH,DEPTH,DEPTH,$fn=3);
+                }
+            }
             }
         }
+         { 
+            translate([-WIDTH/2,0,0]) {
+                rotate(90, v=[1,0,0]) {
+                    cylinder(h=DEPTH, d=HEIGTH); 
+                }
+           
         }
+    }
     }
     }
 }
