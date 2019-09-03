@@ -16,7 +16,7 @@ module dashboard (full){
                     }
                 }
             }
-            
+        }  
         intersection () {        
             translate([WIDTH/2,DEPTH/2,-HEIGTH/6]) {
                 rotate(90, v=[1,0,0]) {
@@ -27,14 +27,14 @@ module dashboard (full){
             }
         }
          { 
-            translate([-WIDTH/2,0,0]) {
+            translate([-WIDTH/2+20,DEPTH/2,0]) {
                 rotate(90, v=[1,0,0]) {
                     cylinder(h=DEPTH, d=HEIGTH); 
                 }
            
+            }
         }
-    }
-    }
+    
     }
 }
 difference(){
