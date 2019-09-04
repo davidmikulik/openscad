@@ -27,14 +27,16 @@ module mainBody(full) {
 
 module arcus(full) {
                 move = full ? 0: THIKNES;
-                translate([WIDTH/2-HEIGTH/2,DEPTH/2,0]) {
+                translate([WIDTH/2-HEIGTH/2,0,0]) {
                 rotate(90, v=[1,0,0]) {
-                  {
+                rotate(-12, v=[1,0,0]) {
+                  
                 //    cylinder(h=DEPTH, d=HEIGTH*1.4); 
-                    pie_slice(ang=90, l=DEPTH, r1=60, r2=55);
-                }         
+                    pie_slice(ang=90, l=DEPTH/2, r1=62, r2=58);
+                }
+                }
             }
-            }
+            
 }
 module hole(full) {
             if (full) {
