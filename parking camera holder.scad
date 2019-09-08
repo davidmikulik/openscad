@@ -5,9 +5,13 @@ SUPPORT_HOLDER_HEIGHT=30;
 SUPPORT_HOLDER_RADIUS=15;
 HOLDER_SIZE=40;
 HOLDER_HEIGHT=25;
-HOLDER_CAP = 4;
-THIKNES=2;
+HOLDER_CAP = 6;
+THIKNES=4;
 SCREW=4;
+MODULES_DISTANCE=65;
+
+SUPPORT=false;
+HOLDER=true;
 module support(){
 
         cylinder(h=SUPPORT_HOLDER_HEIGHT, d=SUPPORT_HOLDER_RADIUS);
@@ -42,12 +46,12 @@ module support(){
     
 }
 module holderSupport() {
-    translate([0,100,0]) {
+    translate([0,MODULES_DISTANCE,0]) {
         difference(){
             box=[HOLDER_SIZE,SUPPORT_SIZE,THIKNES];
             cube(box,true);
             translate([0,0,-THIKNES/2]){
-            cylinder(h=THIKNES, d=SUPPORT_HOLDER_RADIUS-2);
+            cylinder(h=THIKNES, d=SUPPORT_HOLDER_RADIUS+2);
             }
         }
             metric_nut(size=SUPPORT_HOLDER_RADIUS, hole=true, pitch=1.5, flange=3, details=true);
@@ -56,7 +60,7 @@ module holderSupport() {
 }
 module holder(left){
         move = left ? SUPPORT_SIZE/2-THIKNES/2-7:-SUPPORT_SIZE/2+THIKNES/2+7;
-        translate([0,100+move,HOLDER_HEIGHT/2]){
+        translate([0,MODULES_DISTANCE+move,HOLDER_HEIGHT/2]){
         box=[HOLDER_SIZE,THIKNES,HOLDER_HEIGHT];
         cube(box,true);
         move = left ? THIKNES:-THIKNES;
@@ -75,8 +79,11 @@ module holder(left){
         }
     }
 }
- 
-support();
-holderSupport();
-holder(true);
-holder(false);
+if (SUPPORT) {
+    support();
+}
+if (HOLDER) {
+    holderSupport();
+    holder(true);
+    holder(false);
+}
