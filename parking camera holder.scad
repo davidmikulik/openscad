@@ -2,7 +2,7 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 SUPPORT_SIZE=60;
 SUPPORT_HOLDER_HEIGHT=30;
-SUPPORT_HOLDER_RADIUS=8;
+SUPPORT_HOLDER_RADIUS=15;
 HOLDER_SIZE=40;
 HOLDER_HEIGHT=25;
 HOLDER_CAP = 6;
@@ -11,8 +11,8 @@ SCREW=4;
 MODULES_DISTANCE=65;
 
 SUPPORT=false;
-HOLDER=false;
-NUTandSCREW=true;
+HOLDER=true;
+NUTandSCREW=false;
 module support(){
 
         cylinder(h=SUPPORT_HOLDER_HEIGHT, d=SUPPORT_HOLDER_RADIUS);
@@ -55,7 +55,7 @@ module holderSupport() {
             cylinder(h=THIKNES, d=SUPPORT_HOLDER_RADIUS+2);
             }
         }
-            metric_nut(size=SUPPORT_HOLDER_RADIUS, hole=true, pitch=1.5, flange=3, details=true);
+            metric_nut(size=SUPPORT_HOLDER_RADIUS+1, hole=true, pitch=1.5, flange=3, details=true);
 
     }    
 }
@@ -94,7 +94,7 @@ if (NUTandSCREW) {
            metric_bolt(headtype="null", size=SUPPORT_HOLDER_RADIUS, l=25,pitch=2); 
                 }
                 translate([0,-25,0]){
-                            metric_nut(size=SUPPORT_HOLDER_RADIUS, hole=true, pitch=2, flange=3, details=true);
+                            metric_nut(size=SUPPORT_HOLDER_RADIUS+1, hole=true, pitch=2, flange=3, details=true);
             }
         }
         }
