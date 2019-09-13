@@ -56,10 +56,13 @@ post_dia = 6;     //[1:0.5:6]
 post_hole_dia = 3;  //[1:0.5:4]
 //height of the post
 post_height = 5;    //[2:0.5:10]
+<<<<<<< HEAD
 //select if a case is wanted
 case = 1; //[0:false,1:true]
 //select if a lid is wanted
 lid = 0; //[0:false,1:true]
+=======
+>>>>>>> ab058e0bdcca2dbb7c3edab3c8e1889cb6936f44
 //select true if you wanted chamfered edges
 chamfer = 0;//[0:false,1:true]
 //amount of chamfer (keep it small)
@@ -217,6 +220,7 @@ module lid() {
     }
 }
 
+<<<<<<< HEAD
 // lid has ribs that should help it stick onto the top of the project box
 if (lid && top_plate_vents) {
         difference() {
@@ -226,3 +230,6 @@ if (lid && top_plate_vents) {
 } else if (lid){
     lid();
 }
+=======
+//
+>>>>>>> ab058e0bdcca2dbb7c3edab3c8e1889cb6936f44
