@@ -1,7 +1,7 @@
 include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 SUPPORT_SIZE=60;
-SUPPORT_HOLDER_HEIGHT=30;
+SUPPORT_HOLDER_HEIGHT=100;
 SUPPORT_HOLDER_RADIUS=15;
 HOLDER_SIZE=40;
 HOLDER_HEIGHT=25;
@@ -10,8 +10,8 @@ THIKNES=4;
 SCREW=4;
 MODULES_DISTANCE=65;
 
-SUPPORT=false;
-HOLDER=true;
+SUPPORT=true;
+HOLDER=false;
 NUTandSCREW=false;
 module support(){
 
