@@ -56,8 +56,6 @@ post_dia = 6;     //[1:0.5:6]
 post_hole_dia = 3;  //[1:0.5:4]
 //height of the post
 post_height = 5;    //[2:0.5:10]
-//select if a lid is wanted
-lid = 1; //[0:false,1:true]
 //select true if you wanted chamfered edges
 chamfer = 0;//[0:false,1:true]
 //amount of chamfer (keep it small)
@@ -214,12 +212,4 @@ module lid() {
     }
 }
 
-// lid has ribs that should help it stick onto the top of the project box
-if (lid && top_plate_vents) {
-        difference() {
-            lid();
-            vent(xwide/2,2,xwide+thickness*10);
-        }
-} else {
-    lid();
-}
+//
