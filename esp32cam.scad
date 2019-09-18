@@ -108,6 +108,7 @@ module camBox() {
 module camLid() {
     translate([60,0,0]){
         cube([CAM_WIDTH+THIKNES*2,CAM_HEIGHT+THIKNES*2, THIKNES]);
+        //ventilator();
         translate([THIKNES,THIKNES,THIKNES]){
         cube([CAM_WIDTH,CAM_HEIGHT, THIKNES]);
         for (i=[0:3]) {
@@ -143,6 +144,7 @@ module camHolder() {
         
        rotate(a=[0,180,0]) {
        cylinder(h=20, r=CAM_SCREW_SIZE, center=true);
+           
        translate([0,0,-CAM_SCREW_LENGHT/2]){
         metric_bolt(headtype="NULL", size=CAM_SCREW_SIZE, l=CAM_SCREW_LENGHT,pitch=1.25);
        }
