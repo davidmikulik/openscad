@@ -36,9 +36,9 @@ POWER_HOLE_DIAMETER=5;
 POWER_HOLE_X=25;
 POWER_HOLE_Y=17;
 
-CAM_BOX = true;
-CAM_LID=true;
-CAM_HOLDER_SCREW=true;
+CAM_BOX = 0;
+CAM_LID=0;
+CAM_HOLDER_SCREW=0;
 CAM_HOLDER=true;
 
 if (CAM_BOX)
@@ -158,7 +158,7 @@ module camHolder() {
            cylinder(h=20, r=CAM_SCREW_SIZE, center=true);
                
            translate([0,0,-CAM_SCREW_LENGHT/2]){
-            metric_bolt(headtype="NULL", size=CAM_SCREW_SIZE, l=CAM_SCREW_LENGHT,pitch=1.25);
+           metric_bolt(headtype="NULL", size=CAM_SCREW_SIZE, l=CAM_SCREW_LENGHT,pitch=1.25);
            }
        }
     }
@@ -166,8 +166,8 @@ module camHolder() {
     translate([-100,-20,CAM_SCREW_LENGHT/2]){
         difference(){
            sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+THIKNES);
-            translate([0,0,(-CAM_SCREW_SIZE*1.5+THIKNES)+4]){
-           sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+0.5);
+            translate([0,0,(-CAM_SCREW_SIZE*1.5+THIKNES)+4.2]){
+           sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+0.1);
         }
         }
                        translate([0,0,CAM_SCREW_SIZE+CAM_SCREW_LENGHT]){
