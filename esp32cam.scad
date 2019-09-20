@@ -3,8 +3,11 @@
  * - CASE
  * - LID
  * - HOLDER SCREW
+ * - TOGGLE HOLDER
  * (c) 2019 David Mikulik
- * Licensed under MIT license
+ * Licensed under 
+ *   Creative Commons 
+ *   Attribution Non Comercial Share alike license
 */
 include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
@@ -33,10 +36,10 @@ POWER_HOLE_DIAMETER=5;
 POWER_HOLE_X=25;
 POWER_HOLE_Y=17;
 
-CAM_BOX = false;
+CAM_BOX = true;
 CAM_LID=true;
-CAM_HOLDER_SCREW=false;
-CAM_HOLDER=false;
+CAM_HOLDER_SCREW=true;
+CAM_HOLDER=true;
 
 if (CAM_BOX)
 {
@@ -106,11 +109,20 @@ module camBox() {
   
 }
 module camLid() {
+
     translate([60,0,0]){
+    difference() 
+        {
+            union() {
         cube([CAM_WIDTH+THIKNES*2,CAM_HEIGHT+THIKNES*2, THIKNES]);
-        //ventilator();
-        translate([THIKNES,THIKNES,THIKNES]){
+       translate([THIKNES,THIKNES,THIKNES]){
         cube([CAM_WIDTH,CAM_HEIGHT, THIKNES]);
+        }
+    }
+        ventilator(false,true);
+
+        }
+        translate([THIKNES,THIKNES,THIKNES]){
         for (i=[0:3]) {
             movex=  (i==0 || i==2)?THIKNES:CAM_WIDTH-THIKNES;
             movey=  (i==0 || i==3)?THIKNES:CAM_HEIGHT-THIKNES;
@@ -121,7 +133,6 @@ module camLid() {
             }
         }
     }
-
     }
 }
 
@@ -139,28 +150,59 @@ module camHolderScrew() {
 }
 
 module camHolder() {
-
+    
     translate([-40,-20,CAM_SCREW_LENGHT/2]){
-        
-       rotate(a=[0,180,0]) {
-       cylinder(h=20, r=CAM_SCREW_SIZE, center=true);
-           
-       translate([0,0,-CAM_SCREW_LENGHT/2]){
-        metric_bolt(headtype="NULL", size=CAM_SCREW_SIZE, l=CAM_SCREW_LENGHT,pitch=1.25);
+        sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5);
+           translate([0,0,CAM_SCREW_LENGHT/2]){
+           rotate(a=[0,180,0]) {
+           cylinder(h=20, r=CAM_SCREW_SIZE, center=true);
+               
+           translate([0,0,-CAM_SCREW_LENGHT/2]){
+            metric_bolt(headtype="NULL", size=CAM_SCREW_SIZE, l=CAM_SCREW_LENGHT,pitch=1.25);
+           }
        }
-   }
     }
+    }
+    translate([-100,-20,CAM_SCREW_LENGHT/2]){
+        difference(){
+           sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+THIKNES);
+            translate([0,0,(-CAM_SCREW_SIZE*1.5+THIKNES)+4]){
+           sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+0.5);
+        }
+        }
+                       translate([0,0,CAM_SCREW_SIZE+CAM_SCREW_LENGHT]){
+                   rotate(a=[0,180,0]) {
+                   cylinder(h=CAM_SCREW_LENGHT*2, r=CAM_SCREW_SIZE, center=true);
+                   }
+                   translate([-CAM_WIDTH,-CAM_HEIGHT,CAM_SCREW_LENGHT]){
+                   cube([CAM_WIDTH*2,CAM_HEIGHT*2+THIKNES*2, THIKNES]);
+            }
+        }
+
+ 
+    }
+ 
 }
 
-module ventilator(down) {
-    for (i=[0:3]) {
+module ventilator(down,lid) {
+    if (lid) {
+        for (i=[0:7]) {
+            move =down? CAM_HEIGHT+THIKNES:0;
+            
+            translate([THIKNES*2+2,i*3+5, move]){
+                cube([CAM_WIDTH-THIKNES*2-5,1, THIKNES*3]);               
+            }            
+        }
+    }
+    else
+    {
+            for (i=[0:3]) {
         move =down? CAM_HEIGHT+THIKNES:0;
         
         translate([5,move,i*3+5]){
-            cube([CAM_WIDTH-5,THIKNES, 1]);
-            
+            cube([CAM_WIDTH-5,THIKNES, 1]);            
         }
-        
+        }
     }
     
 }
