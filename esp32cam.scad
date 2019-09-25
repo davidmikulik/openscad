@@ -13,6 +13,11 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>
 
+CAM_BOX = 1;
+CAM_LID=1;
+CAM_HOLDER_SCREW=1;
+CAM_HOLDER=1;
+
 CAM_WIDTH=43;
 CAM_HEIGHT=30;
 CAM_DEPTH = 27;
@@ -36,10 +41,6 @@ POWER_HOLE_DIAMETER=5;
 POWER_HOLE_X=25;
 POWER_HOLE_Y=17;
 
-CAM_BOX = 0;
-CAM_LID=0;
-CAM_HOLDER_SCREW=0;
-CAM_HOLDER=true;
 
 if (CAM_BOX)
 {
@@ -57,7 +58,13 @@ if (CAM_HOLDER) {
 }
 
 module camBox() {
-    
+    //LENS TUBE
+    translate([LENS_HOLE_Y+THIKNES,LENS_HOLE_X+THIKNES,-1]){
+    tube(h=1, or=LENS_HOLE_DIAMETER, wall=THIKNES*2);}
+    //LIGHT TUBE
+    translate([LIGHT_HOLE_Y+THIKNES,LIGHT_HOLE_X+THIKNES,-1]){
+    tube(h=1, or=LIGHT_HOLE_DIAMETER+2, wall=THIKNES);}
+
     difference(){
         cube([CAM_WIDTH+THIKNES*2,CAM_HEIGHT+THIKNES*2, CAM_DEPTH+THIKNES]);
         translate([THIKNES,THIKNES,THIKNES]) {
@@ -68,11 +75,12 @@ module camBox() {
 
             cylinder(d=LENS_HOLE_DIAMETER, h=THIKNES*2, $fn=100);
         }
+        
         //light
         translate([LIGHT_HOLE_Y+THIKNES,LIGHT_HOLE_X+THIKNES,THIKNES]){
 
 //            //cylinder(d=LIGHT_HOLE_DIAMETER, h=THIKNES*2, $fn=100);
-            downcyl(r1=LIGHT_HOLE_DIAMETER+3, r2=LIGHT_HOLE_DIAMETER, h=THIKNES);
+            downcyl(r1=LIGHT_HOLE_DIAMETER+1, r2=LIGHT_HOLE_DIAMETER, h=THIKNES);
 
         }
         //antena hole

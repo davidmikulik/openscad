@@ -11,7 +11,7 @@ SCREW=4;
 MODULES_DISTANCE=65;
 
 SUPPORT=true;
-HOLDER=false;
+HOLDER=true;
 NUTandSCREW=false;
 module support(){
 
