@@ -13,10 +13,10 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>
 
-CAM_BOX = 1;
+CAM_BOX = 0;
 CAM_LID=1;
-CAM_HOLDER_SCREW=1;
-CAM_HOLDER=1;
+CAM_HOLDER_SCREW=0;
+CAM_HOLDER=0;
 
 CAM_WIDTH=43;
 CAM_HEIGHT=30;
