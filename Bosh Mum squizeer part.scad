@@ -14,14 +14,14 @@ THIKNES=2;
 HOLE_DIMETER = 8;
 PART_DIAMETER = 43;
 PART_HEIGHT=11;
-LEFT=false;
-NUTS=1;
-ONLY_BOLT=false;
+LEFT=true;
+NUTS=false;
+ONLY_BOLT=true;
 SCREW_SIZE=4;
 SCREW_LENGHT= 28;
 
 if (ONLY_BOLT) {
-    metric_bolt(headtype="socket", size=SCREW_SIZE, l=SCREW_LENGHT);
+    metric_bolt(headtype="socket", size=SCREW_SIZE-1, l=SCREW_LENGHT);
 }
 else {
     if (!LEFT) {
