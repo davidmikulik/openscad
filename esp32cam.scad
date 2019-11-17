@@ -13,10 +13,12 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>
 
-CAM_BOX = 0;
-CAM_LID=1;
+CAM_BOX = 1;
+CAM_LID=0;
+CAM_BOX_TUBES=0;
 CAM_HOLDER_SCREW=0;
-CAM_HOLDER=0;
+CAM_HOLDER_TOP=0;
+CAM_HOLDER_BASEMENT=0;
 
 CAM_WIDTH=43;
 CAM_HEIGHT=30;
@@ -53,18 +55,22 @@ if (CAM_LID)
 if (CAM_HOLDER_SCREW) {
     camHolderScrew();
 }
-if (CAM_HOLDER) {
-    camHolder();
+if (CAM_HOLDER_TOP) {
+    camHolderTop();
+}
+if (CAM_HOLDER_BASEMENT) {
+    camHolderBasement();
 }
 
 module camBox() {
-    //LENS TUBE
-    translate([LENS_HOLE_Y+THIKNES,LENS_HOLE_X+THIKNES,-1]){
-    tube(h=1, or=LENS_HOLE_DIAMETER, wall=THIKNES*2);}
-    //LIGHT TUBE
-    translate([LIGHT_HOLE_Y+THIKNES,LIGHT_HOLE_X+THIKNES,-1]){
-    tube(h=1, or=LIGHT_HOLE_DIAMETER+2, wall=THIKNES);}
-
+    if (CAM_BOX_TUBES) {
+        //LENS TUBE
+        translate([LENS_HOLE_Y+THIKNES,LENS_HOLE_X+THIKNES,-1]){
+        tube(h=1, or=LENS_HOLE_DIAMETER, wall=THIKNES*2);}
+        //LIGHT TUBE
+        translate([LIGHT_HOLE_Y+THIKNES,LIGHT_HOLE_X+THIKNES,-1]){
+        tube(h=1, or=LIGHT_HOLE_DIAMETER+2, wall=THIKNES);}
+    }
     difference(){
         cube([CAM_WIDTH+THIKNES*2,CAM_HEIGHT+THIKNES*2, CAM_DEPTH+THIKNES]);
         translate([THIKNES,THIKNES,THIKNES]) {
@@ -157,10 +163,10 @@ module camHolderScrew() {
     }
 }
 
-module camHolder() {
+module camHolderTop() {
     
     translate([-40,-20,CAM_SCREW_LENGHT/2]){
-        sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5);
+        sphere($fn = 20, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5);
            translate([0,0,CAM_SCREW_LENGHT/2]){
            rotate(a=[0,180,0]) {
            cylinder(h=20, r=CAM_SCREW_SIZE, center=true);
@@ -171,9 +177,12 @@ module camHolder() {
        }
     }
     }
+
+ }
+ module camHolderBasement() {
     translate([-100,-20,CAM_SCREW_LENGHT/2]){
         difference(){
-           sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+THIKNES);
+           sphere($fn = 20, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+THIKNES);
             translate([0,0,(-CAM_SCREW_SIZE*1.5+THIKNES)+4.2]){
            sphere($fn = 0, $fa = 12, $fs = 2, r = CAM_SCREW_SIZE*1.5+0.1);
         }
@@ -186,11 +195,8 @@ module camHolder() {
                    cube([CAM_WIDTH*2,CAM_HEIGHT*2+THIKNES*2, THIKNES]);
             }
         }
-
- 
-    }
- 
-}
+     }
+ }
 
 module ventilator(down,lid) {
     if (lid) {

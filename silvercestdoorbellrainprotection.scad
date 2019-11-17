@@ -77,7 +77,7 @@ if (BASE) {
         }
     }
 
-    translate ([0,PROTECTION_HEIGTH-THIKNES,0]) {
+    translate ([0,PROTECTION_HEIGTH,-THIKNES/2]) {
         rotate ([29,0,0]) {
         cube([PROTECTION_WIDTH,THIKNES,ROOF_HEIGHT*1.5]);
         }
@@ -88,29 +88,29 @@ if (TOP_PLATE) {
     translate ([0,PROTECTION_HEIGTH*2,0]) {
     difference ()
         {
-        cube([PROTECTION_WIDTH,PROTECTION_HEIGTH*0.7, THIKNES]);
+        cube([PROTECTION_WIDTH,35, THIKNES]);
         translate ([31,18,0]) {
         cylinder(d=20, h=THIKNES*2, $fn=100);
         }
         }
     translate ([THIKNES,0,THIKNES]) {
-    cube([THIKNES,PROTECTION_HEIGTH*0.7,10]);
+    cube([THIKNES,35,10]);
     rotate ([0,90,0]) {
-    translate ([-10+4.3,6.6,-THIKNES*0.5]) {
-        cylinder(d=THIKNES, h=THIKNES, $fn=100);
+    translate ([-10+4.3,7.3,-THIKNES*0.5]) {
+        cylinder(d=THIKNES-0.4, h=THIKNES, $fn=100);
     }
     translate ([-10+4.3,25.9,-THIKNES*0.5]) {
-        cylinder(d=THIKNES, h=THIKNES, $fn=100);
+        cylinder(d=THIKNES-0.4, h=THIKNES, $fn=100);
     }
     }
     translate ([PROTECTION_WIDTH-THIKNES*3,0,0]) {
-    cube([THIKNES,PROTECTION_HEIGTH*0.7,10]);
+    cube([THIKNES,35,10]);
     rotate ([0,90,0]) {
-    translate ([-10+4.3,6.6,0]) {
-        cylinder(d=THIKNES, h=THIKNES*2, $fn=100);
+    translate ([-10+4.3,7.3,0]) {
+        cylinder(d=THIKNES-0.4, h=THIKNES*2, $fn=100);
     }
     translate ([-10+4.3,25.9,0]) {
-        cylinder(d=THIKNES, h=THIKNES*2, $fn=100);
+        cylinder(d=THIKNES-0.4, h=THIKNES*2, $fn=100);
     }
     }        
     }
