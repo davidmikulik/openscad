@@ -13,18 +13,18 @@ REVERSE_BOTTOM = "";
 
 /* [Coin Properties] */
 // (mm)
-DIAMETER = 39;
+DIAMETER = 24.3;
 // (mm)
-THICKNESS = 3.2;
+THICKNESS = 2.4;
 
 /* [Text Properties] */
 
 // Letter height (mm)
-TEXT_HEIGHT = 5.0;
+TEXT_HEIGHT = 4.0;
 // ratio (1.0 is nominal)
-SPACING = 0.8;
+SPACING = 0.9;
 // Print height (mm)
-RELIEF = 1.0;
+RELIEF = 0.6;
 
 /* [Hidden] */
 

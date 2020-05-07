@@ -1,5 +1,5 @@
 /*
- * Raspberry Pi 4 Wall holder
+ * Raspberry Pi 4 Wall mount
  * (c) 2020 David Mikulik
  * Licensed under 
  * Creative Commons 
@@ -7,8 +7,6 @@
  */
  
 
-include <BOSL/constants.scad>
-use <BOSL/shapes.scad>
 THIKNES=2;
 LENGHT=70;
 WALL_PART=20;
