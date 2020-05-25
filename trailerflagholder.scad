@@ -9,26 +9,26 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>
  
-THIKNES=1.7;
+THIKNES=2.7;
 
 HOLDER_WIDTH= 30;
-HOLDER_DEPTH=19;
-HOLDER_HEIGHT=37;
-TRAILER_CASE_DEPTH=14;
-TRAILER_CASE_DEPTH2=45;
+HOLDER_DEPTH=14;
+HOLDER_HEIGHT=24;
+TRAILER_CASE_DEPTH=9;
+TRAILER_CASE_DEPTH2=25;
 
 SCREW_FLAG_LENGHT = 10;
 SCREW_FLAG_DIAMETER = 6;
 
-SCREW_HOLDER_LENGHT = 35;
+SCREW_HOLDER_LENGHT = 25;
 SCREW_HOLDER_DIAMETER = 6;
 
-FLAG_HOLDER_HEIGHT=35;
-FLAG_HOLDER_DIAMETER=10.2+2*THIKNES;
+FLAG_HOLDER_HEIGHT=45;
+FLAG_HOLDER_DIAMETER=10+2*THIKNES;
 
-HOLDER = 1;
-HOLDER_PART = 1;
-NUTS = 1;
+HOLDER = 0;
+HOLDER_PART = 0;
+NUTS = 0;
 FLAG_HOLDER = 1;
 
 if (HOLDER) {
@@ -59,11 +59,16 @@ if (HOLDER) {
         difference ()
         {
             cube ([HOLDER_WIDTH,THIKNES, HOLDER_HEIGHT]);
-            translate ([HOLDER_WIDTH/2,0,HOLDER_HEIGHT/2]) {
+            translate ([HOLDER_WIDTH/2,THIKNES,HOLDER_HEIGHT/2]) {
                 rotate ([90,0,0]) {
                 cylinder(d=SCREW_FLAG_DIAMETER+1, h=THIKNES, $fn=100);
                 }
             }
+        }
+        rotate ([90,0,0]) {
+        translate ([HOLDER_WIDTH/2,HOLDER_HEIGHT/2,0]) {
+        metric_nut(size=SCREW_FLAG_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
+        }
         }
         }
     }
@@ -72,21 +77,9 @@ if (HOLDER) {
 }
 }
 if (HOLDER_PART) {
-rotate ([90,0,0]) {    
-    translate ([HOLDER_WIDTH+5,0,-HOLDER_HEIGHT]) {
-        difference ()
-        {
-            cube ([HOLDER_WIDTH,THIKNES, HOLDER_HEIGHT]);
-            rotate ([90,0,0]) {
-            translate ([4,HOLDER_HEIGHT-4,-THIKNES]) {
-                    cylinder(d=SCREW_HOLDER_DIAMETER+1, h=THIKNES, $fn=100);
-                }
-            translate ([HOLDER_WIDTH-4,HOLDER_HEIGHT-4,-THIKNES]) {
-                    cylinder(d=SCREW_HOLDER_DIAMETER+1, h=THIKNES, $fn=100);
-               
-                }
-            }
-        }
+rotate ([180,0,0]) {    
+    translate ([HOLDER_WIDTH+5,0,0]) {
+        metric_bolt(headtype="hex", size=SCREW_FLAG_DIAMETER, l=TRAILER_CASE_DEPTH2-10);
     }
 }
 }
@@ -105,12 +98,14 @@ if (FLAG_HOLDER) {
     rotate ([90,0,0]) {
     //-FLAG_HOLDER_HEIGHT*2.5+5
     translate ([HOLDER_WIDTH*3+20,0,0]) {
+    translate ([0,0,-THIKNES]) {    
         difference ()
         {
-            cube ([HOLDER_WIDTH,FLAG_HOLDER_HEIGHT, THIKNES]);
+            cube ([HOLDER_WIDTH,FLAG_HOLDER_HEIGHT, THIKNES*2]);
             rotate ([0,0,0]) {
             translate ([HOLDER_WIDTH/2,HOLDER_HEIGHT/2, 0]) {
-                    cylinder(d=SCREW_FLAG_DIAMETER+1, h=THIKNES, $fn=100);
+                    cylinder(d=SCREW_FLAG_DIAMETER+1, h=THIKNES*2, $fn=500);
+            }
        }
     }
     }
