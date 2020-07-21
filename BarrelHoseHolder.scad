@@ -6,7 +6,6 @@
  *   Attribution Non Comercial Share alike license
  */
  
- 
 include <BOSL/constants.scad>
 
 
