@@ -12,10 +12,10 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>   
 
-THIKNES=4;
+THIKNES=6;
 BARREL_CLIP_DIAMETER=30;
 HOSE_DIAMETER=17.5;
-HOLDER_WIDTH=15;
+HOLDER_WIDTH=19;
 SCREW_SIZE=10;
 SCREW_HEIGHT=HOLDER_WIDTH;
 BOLT=1;
@@ -34,8 +34,8 @@ difference () {
     }
 }
 
-translate([-HOLDER_WIDTH/2,HOSE_DIAMETER/2,0]) {   
-    cube ([HOLDER_WIDTH,THIKNES*1.5, HOLDER_WIDTH]);
+translate([-HOLDER_WIDTH/2,HOSE_DIAMETER/2,-HOLDER_WIDTH/4]) {   
+    cube ([HOLDER_WIDTH,THIKNES*2, HOLDER_WIDTH*1.5]);
 }
 translate([-HOLDER_WIDTH/2,HOSE_DIAMETER/2+THIKNES,HOLDER_WIDTH/2-THIKNES]) {  
     rotate ([0,90,0]) {
@@ -46,7 +46,7 @@ translate([-HOLDER_WIDTH/2,HOSE_DIAMETER/2+THIKNES,HOLDER_WIDTH/2-THIKNES]) {
             translate([-HOLDER_WIDTH/2-THIKNES,0,0]) {   
                 cube ([THIKNES,BARREL_CLIP_DIAMETER, HOLDER_WIDTH]);
             }
-            translate([0,0,0]) {   
+            translate([-THIKNES/2+.5,0,0]) {   
                 cube ([THIKNES,BARREL_CLIP_DIAMETER, HOLDER_WIDTH]);
             }
         }
@@ -69,7 +69,7 @@ if (BOLT) {
         rotate ([90,0,180]) {
         teardrop(r=SCREW_SIZE*1, h=THIKNES, ang=40);
         }
-        metric_bolt(size=SCREW_SIZE,l=SCREW_HEIGHT+10,headtype="none", align="base");
+        metric_bolt(size=SCREW_SIZE,l=SCREW_HEIGHT,headtype="none", align="base");
     }
     translate([0,-HOLDER_WIDTH*5,SCREW_HEIGHT+10]) {   
         rotate ([90,0,0]) {
