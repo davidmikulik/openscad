@@ -27,8 +27,8 @@ COVER_DEPTH=27;
 PIN_HEIGTH=20;
 PIN_DIAMETER=10;
 
-CBOARD=0;
-CCOVER=1;
+CBOARD=1;
+CCOVER=0;
 if (CBOARD) 
 {
     board();
@@ -77,15 +77,19 @@ module board ()
 
             cube ([BOARD_WIDTH,BOARD_HEIGTH,THIKNES]);
             translate ([4,3,0]){
+                cube ([69-PIN_DIAMETER/2,PIN_DIAMETER/2,PIN_HEIGTH]);
+                cube ([PIN_DIAMETER/2,BOARD_HEIGTH-PIN_DIAMETER/2,PIN_HEIGTH]);
                 pin();
             }
             translate ([69,3,0]){
+                cube ([PIN_DIAMETER/2,BOARD_HEIGTH-PIN_DIAMETER/2,PIN_HEIGTH]);
                 pin();
             }
             translate ([69,BOARD_HEIGTH-3,0]){
                 pin();
             }
             translate ([4,BOARD_HEIGTH-3,0]){
+                cube ([69-PIN_DIAMETER/2,PIN_DIAMETER/2,PIN_HEIGTH]);
                 pin();
             }
         }

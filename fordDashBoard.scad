@@ -6,6 +6,7 @@ WIDTH =77;
 HEIGTH = 20;
 DEPTH = 9;
 HOLE=16;
+$fn = 100;
 module dashboard (full){
     move = full ? 0: THIKNES;
     translate([0,move,0]) {

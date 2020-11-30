@@ -7,12 +7,13 @@
  */
  
 
-MAIN_BOARD = 0;
-LID = 1;
-LID_DISPLAY=1;
-BOARD_SCREW_HOLDERS = 1;
-WITHCASE=1;
-WITH_CAR_SOCKET=1;
+MAIN_BOARD = 1;
+LID = 0;
+LID_DISPLAY=0;
+BOARD_SCREW_HOLDERS = 0;
+SPARX_BATTERY =1;
+WITHCASE=0;
+WITH_CAR_SOCKET=0;
 CASE_HEIGHT=24+40;
 CASE_THIKNES=4;
 $fn = 100;
@@ -25,6 +26,9 @@ if (BOARD_SCREW_HOLDERS) boardScrewHolders();
 if (WITHCASE) case();
 }
 
+if (SPARX_BATTERY) {
+    sparxBattery();
+}
 if (LID) {
     lid();
 }
@@ -134,6 +138,86 @@ module boardScrewHolders () {
     
 }
 
+module sparxBattery() {
+translate ([-3,23,0]) 
+{    
+    translate ([20,-8,21]) 
+    {
+        sparxBatteryScrewHolder();
+        translate ([32,0,0]) {sparxBatteryScrewHolder();}
+        translate ([32,75,0]) {sparxBatteryScrewHolder();}
+        translate ([1,74,0]) {sparxBatteryScrewHolder();}
+        
+       
+    }
+    translate ([0,-23,16]) 
+    {
+        difference () 
+        {
+            cube ([75.8,101,CASE_THIKNES]);
+            translate([30,(60-27)/2-10,0]) {
+                cube ([10,10,CASE_THIKNES]);
+            }
+        }
+        translate ([0,(101-60)/2,0]) {sparxBatterySide();
+            translate([7,(60-27)/2,1]) {
+            cube ([4,27,11]);
+        }
+        };
+        translate ([75.8-CASE_THIKNES,(101-60)/2,0]) {sparxBatterySide();        translate([-7,(60-27)/2,1]) {
+            cube ([4,27,11]);
+        }
+        };
+        translate ([35,0,0]) {
+            rotate ([0,0,60]) {cube ([CASE_THIKNES,40,26]);}
+        }
+        translate ([-38+75.8,4,0]) {
+            rotate ([0,0,-60]) {cube ([CASE_THIKNES,40,26]);}
+        }
+        translate ([75.8/2-CASE_THIKNES,0,0]) {cube ([CASE_THIKNES*2,CASE_THIKNES,26]);}
+        
+        translate ([75.8-CASE_THIKNES/2,101-22,0]) {
+            rotate ([0,0,60]) {cube ([CASE_THIKNES,40,26]);}
+        }
+        translate ([0,101-18,0]) {
+            rotate ([0,0,-60]) {cube ([CASE_THIKNES,40,26]);}
+        }
+        translate ([75.8/2-CASE_THIKNES,98,0]) {cube ([CASE_THIKNES*2,CASE_THIKNES,26]);}
+
+
+    }
+}
+}
+
+module sparxBatteryScrewHolder () {
+    difference () 
+    {
+        cylinder (d=7,h=22);
+        cylinder (d=3.5,h=22);
+    }
+}
+module sparxBatterySide () {
+    difference () 
+    {
+        cube ([CASE_THIKNES,60,26]);
+        translate([-1,(60-27)/2,16]) {
+            cube ([CASE_THIKNES*2,27,11]);
+        }
+        translate([-1,(60-16)/2,10]) {
+            cube ([CASE_THIKNES*2,16,8]);
+        }
+        translate([-1,(60)/2+8,11]) {
+            rotate([45,0,0]) {
+                cube ([CASE_THIKNES*2,8,8]);
+            }
+        }
+        translate([-1,(60)/2-8,10]) {
+            rotate([45,0,0]) {
+                cube ([CASE_THIKNES*2,8,8]);
+            }
+        }
+    }
+}
 module boardScrewHolder () {
     difference () 
     {

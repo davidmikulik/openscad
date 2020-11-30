@@ -30,6 +30,7 @@ RELIEF = 0.6;
 
 // Epsilon
 E = 0.01;
+$fn=100;
 
 module coin(
     top_text="",             // Text of centered top text

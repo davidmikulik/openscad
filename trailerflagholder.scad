@@ -28,8 +28,10 @@ FLAG_HOLDER_DIAMETER=10+2*THIKNES;
 
 HOLDER = 0;
 HOLDER_PART = 0;
-NUTS = 0;
-FLAG_HOLDER = 1;
+NUTS = 1;
+SCREW = 0;
+FLAG_HOLDER = 0;
+$fn=100;
 
 if (HOLDER) {
     rotate ([0,270,0]) {
@@ -86,12 +88,12 @@ rotate ([180,0,0]) {
 if (NUTS) {
     translate ([HOLDER_WIDTH*2+15,0,0]) {
         metric_nut(size=SCREW_FLAG_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
-        translate ([0,SCREW_HOLDER_DIAMETER*5,0]) {
-        metric_nut(size=SCREW_HOLDER_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
-        }
-        translate ([0,SCREW_HOLDER_DIAMETER*9,0]) {
-        metric_nut(size=SCREW_HOLDER_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
-        }
+//        translate ([0,SCREW_HOLDER_DIAMETER*5,0]) {
+//        metric_nut(size=SCREW_HOLDER_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
+//        }
+//        translate ([0,SCREW_HOLDER_DIAMETER*9,0]) {
+//        metric_nut(size=SCREW_HOLDER_DIAMETER+1, hole=true, pitch=1.5, flange=3, details=true);
+//        }
     }
 }
 if (FLAG_HOLDER) {
@@ -110,10 +112,21 @@ if (FLAG_HOLDER) {
     }
     }
     rotate ([270,0,0]) {
-        translate ([HOLDER_WIDTH/2,0, FLAG_HOLDER_HEIGHT-5]) {
+        difference() {
+        translate ([HOLDER_WIDTH/2,0, FLAG_HOLDER_HEIGHT-5]) {       
         tube(h=FLAG_HOLDER_HEIGHT*1.5, od=FLAG_HOLDER_DIAMETER, wall=THIKNES, $fn=360);
+        rotate ([90,0,0]) {
+            translate ([0,FLAG_HOLDER_HEIGHT,FLAG_HOLDER_DIAMETER/2]) {
+            //metric_bolt(headtype="", size=SCREW_FLAG_DIAMETER/2, l=FLAG_HOLDER_DIAMETER);
+                }
         }
+        }
+    }
     }   
 }
 }
+}
+
+if (SCREW) {
+    metric_bolt(headtype="hex", size=SCREW_FLAG_DIAMETER/2-1, l=FLAG_HOLDER_DIAMETER);
 }
