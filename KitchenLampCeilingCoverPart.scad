@@ -11,15 +11,44 @@ include <BOSL/constants.scad>
 use <BOSL/metric_screws.scad>
 use <BOSL/shapes.scad>
 
-WALL=2;
+WALL=1;
 TUBEDIAMETER= 22.8;
 TUBELENGTH= 50;
 
 TOPPARTLENGTH=90;
 TOPPARTDIAMETERTOP=85;
 TOPPARTDIAMETERDOWN=75;
+
+SCREWTUBEHEIGTH=60;
+SCREWTUBEDIAMETER=25;
+SCREWTUBESCREWLENGTH=21;
+
+
+
 TUBE = false;
-TOPPART= true;
+TOPPART= false;
+SCREWTUBE=true;
+TOPTUBE=false;
+
+TOPTUBEDIAMETER=102;
+TOPTUBEHEIGHT=60;
+
+if (TOPTUBE) {
+    tube(h=10, od=TOPTUBEDIAMETER+WALL*2, wall=WALL, $fn=100);
+    translate([0,0,6])
+    tube(h=TOPTUBEHEIGHT, od=TOPTUBEDIAMETER, wall=WALL, $fn=100);
+}
+if (SCREWTUBE) {
+    //tube(h=SCREWTUBEHEIGTH, od=SCREWTUBEDIAMETER, wall=WALL, $fn=100);
+    difference () 
+    {
+        cylinder(d=SCREWTUBEDIAMETER+WALL*2,h=SCREWTUBEHEIGTH,$fn=100);
+        translate([0,0,SCREWTUBESCREWLENGTH-WALL*2])
+        cylinder(d=SCREWTUBEDIAMETER,h=SCREWTUBEHEIGTH,$fn=100);
+        translate([0,0,SCREWTUBESCREWLENGTH-WALL*2])
+            metric_bolt(headtype="", size=SCREWTUBEDIAMETER, l=20, details=true);
+    }
+}
 
 if (TUBE) {
     tube(h=TUBELENGTH, od=TUBEDIAMETER, wall=WALL, $fn=100);

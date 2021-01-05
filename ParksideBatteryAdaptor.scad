@@ -7,14 +7,16 @@
  */
  
 
-MAIN_BOARD = 1;
-LID = 0;
+MAIN_BOARD = 0;
+LID = 1;
 LID_DISPLAY=0;
-BOARD_SCREW_HOLDERS = 0;
-SPARX_BATTERY =1;
-WITHCASE=0;
+BOARD_SCREW_HOLDERS = 1;
+SPARX_BATTERY =0;
+WITHCASE=1;
 WITH_CAR_SOCKET=0;
-CASE_HEIGHT=24+40;
+WITH_USB_SOCKET=0;
+WITH_SWITCH=1;
+CASE_HEIGHT=20;
 CASE_THIKNES=4;
 $fn = 100;
 
@@ -106,7 +108,22 @@ module case () {
             cube ([69,CASE_THIKNES,CASE_HEIGHT]);
             if (WITH_CAR_SOCKET) {
             translate([69/2,CASE_THIKNES,CASE_HEIGHT-20]) {rotate ([90,0,0]) {cylinder(d=23.5, h=CASE_THIKNES);}}
-        }}
+        }
+            if (WITH_USB_SOCKET) {
+                translate([69/2+7,0,7])
+                cube ([14,CASE_THIKNES,9]);                
+            }
+            if (WITH_SWITCH) {
+                translate([10,0,7])
+                cube ([13.6,CASE_THIKNES,8.3]);                
+            }
+        }
+        if (WITH_USB_SOCKET) {
+            translate([69/2+15-6,14,0])
+            screwHolder (3,1,6);
+            translate([69/2+15+6,14,0])
+            screwHolder (3,1,6);
+        }
         cube ([CASE_THIKNES,78,CASE_HEIGHT]);
         translate ([0,78-CASE_THIKNES,0]) {cube ([69,CASE_THIKNES,CASE_HEIGHT]);}
         translate ([69-CASE_THIKNES,0,0]) {cube ([CASE_THIKNES,78,CASE_HEIGHT]);}
@@ -128,6 +145,7 @@ module lidScrewHolder () {
     }
 }
 module boardScrewHolders () {
+/*
     translate ([20,15,16]) 
     {
         boardScrewHolder();
@@ -135,7 +153,14 @@ module boardScrewHolders () {
         translate ([31,54,0]) {boardScrewHolder();}
         translate ([0,54,0]) {boardScrewHolder();}
     }
-    
+  */
+    translate ([10,35,16]) 
+    {
+        boardScrewHolder();
+        translate ([51,0,0]) {boardScrewHolder();}
+        translate ([51,21,0]) {boardScrewHolder();}
+        translate ([0,21,0]) {boardScrewHolder();}
+    }
 }
 
 module sparxBattery() {
@@ -192,8 +217,7 @@ translate ([-3,23,0])
 module sparxBatteryScrewHolder () {
     difference () 
     {
-        cylinder (d=7,h=22);
-        cylinder (d=3.5,h=22);
+        screwHolder(7,3.5,22);
     }
 }
 module sparxBatterySide () {
@@ -219,10 +243,14 @@ module sparxBatterySide () {
     }
 }
 module boardScrewHolder () {
+    screwHolder(5,3,7);
+}
+module screwHolder(diameter,diameterInternal, height)
+{
     difference () 
     {
-        cylinder (d=5,h=7);
-        cylinder (d=3,h=7);
+        cylinder (d=diameter,h=height);
+        cylinder (d=diameterInternal,h=height);
     }
 }
 module batteryConnector () {
