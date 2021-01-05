@@ -6,9 +6,10 @@
  *   Attribution Non Comercial Share alike license
  */
  
-include <BOSL/constants.scad>
-use <BOSL/metric_screws.scad>
-use <BOSL/shapes.scad>
+//include <BOSL/constants.scad>
+//use <BOSL/metric_screws.scad>
+use <FAKE/metric_screws.scad>
+//use <BOSL/shapes.scad>
 $fn=100;
  TABLET_WIDTH=145;
  TABLET_HEIGTH=70;
@@ -16,14 +17,14 @@ $fn=100;
  TABLET_FRAME=2;
  TABLET_BACK_FRAME=15;
  THIKNES=2;
- 
+
  POWER_ADAPTOR_X_SIZE = 14;
  POWER_ADAPTOR_Z_SIZE = 7;
  POWER_ADAPTOR_X_MOVE = 36;
  POWER_ADAPTOR_Z_MOVE = 1.5;
  
  
- WITH_FRAME_X=0;
+ WITH_FRAME_X=1;
  WITH_FRAME_Y=1;
  WITH_ADAPTOR_Y=0;
  WITH_ADAPTOR_X=0;
@@ -115,14 +116,16 @@ module x_frame() {
         x_frame_side(false);
 }
 module x_frame_side (left) {
-    difference() {
+    difference() 
+    {
         cube([THIKNES,TABLET_BACK_FRAME+THIKNES,TABLET_DEPTH+THIKNES]);
         rotate ([0,90,0]) {
             translate ([-THIKNES,0,0])
                 frameHoles ();
         }
     }
-}
+} 
+
 module frameHoles () {
         translate([-TABLET_DEPTH/4,TABLET_BACK_FRAME/4,THIKNES])
              metric_bolt(headtype="", size=4, l=THIKNES*2);
