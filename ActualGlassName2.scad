@@ -21,16 +21,16 @@ TEXTPAD_IMAGE = "creeperhead.png";
 NAME = 0;
 IMAGE= 1;
 
- //hook ();
+ hook ();
  $fn=100;
- translate ([30,0,0])   textPad ();
+ //translate ([30,0,0])   textPad ();
   
  module hook() {
      difference () {
         cylinder(d= HOOK_DIAMETER, h=THIKNES);
         cylinder(d= HOOK_DIAMETER-THIKNES*2, h=THIKNES);
-        translate ([HOOK_DIAMETER/2-THIKNES*1.5,0,0])
-            cube ([THIKNES/2, HOOK_DIAMETER/2, THIKNES]);
+        translate ([HOOK_DIAMETER/2-THIKNES*1.2,0,0])
+            cube ([THIKNES/4, HOOK_DIAMETER/2, THIKNES]);
      }
      translate ([HOOK_DIAMETER/2-THIKNES,0,0])
         cube ([THIKNES, HOOK_DIAMETER*2, THIKNES]);
