@@ -11,20 +11,24 @@
 use <FAKE/metric_screws.scad>
 //use <BOSL/shapes.scad>
 $fn=100;
- TABLET_WIDTH=145;
- TABLET_HEIGTH=70;
+ TABLET_WIDTH=80; //244
+ TABLET_HEIGTH=60; //154
  TABLET_DEPTH=12;
- TABLET_FRAME=2;
+ TABLET_FRAME=9;
  TABLET_BACK_FRAME=15;
  THIKNES=2;
 
  POWER_ADAPTOR_X_SIZE = 14;
  POWER_ADAPTOR_Z_SIZE = 7;
- POWER_ADAPTOR_X_MOVE = 36;
+ POWER_ADAPTOR_X_MOVE = 19;
  POWER_ADAPTOR_Z_MOVE = 1.5;
- 
- 
- WITH_FRAME_X=1;
+
+ LOCK_DIAMETER = 11.5;
+ LOCK_DEPTH=10;
+ LOCK_DEPTH_2=14;
+
+ WITH_LOCK =1;
+ WITH_FRAME_X=0;
  WITH_FRAME_Y=1;
  WITH_ADAPTOR_Y=0;
  WITH_ADAPTOR_X=0;
@@ -54,10 +58,11 @@ module bolt () {
 
 module hinge () {
     translate ([THIKNES/2,THIKNES/2,0]) {
-        difference() {
+        difference() 
+        {
             cube([THIKNES,TABLET_BACK_FRAME+THIKNES,TABLET_DEPTH+THIKNES*2]);
             rotate ([0,90,0]) {
-                translate ([-THIKNES,0,0])
+                translate ([-THIKNES,THIKNES,0])
                     frameHoles ();
             }
         }
@@ -67,7 +72,7 @@ module hinge () {
         rotate ([0,0,0]) {
         difference() {
                 cube([THIKNES,TABLET_BACK_FRAME+THIKNES,TABLET_DEPTH+THIKNES*2]);
-                rotate ([0,90,0]) {
+                rotate ([180,90,0]) {
                     translate ([-THIKNES,0,0])
                         frameHoles ();
                 }
@@ -105,7 +110,7 @@ module x_frame() {
         if (WITH_LOGO)
         translate ([(TABLET_WIDTH-20)/2,1,TABLET_DEPTH+THIKNES*2-1])
             rotate ([0,0,0])
-                scale([.1,.1,.02])
+                scale([.2,.2,.02])
                     surface(file=LOGO_FILE,invert=true);
         if(WITH_ADAPTOR_Y)
             powerAdaptor();
@@ -139,13 +144,20 @@ module frameHoles () {
 module y_frame() {
     difference () {
     union () {
-    difference () {
+    difference () 
+        {
         frame(false);
         rotate ([90,90,0]) {
             translate ([0,0,-THIKNES])
                 frameHoles ();
-            translate ([0,TABLET_HEIGTH-TABLET_BACK_FRAME,-THIKNES])
-                frameHoles ();
+            if (WITH_LOCK) {
+                translate ([-LOCK_DIAMETER/2,TABLET_HEIGTH-LOCK_DIAMETER+THIKNES,-THIKNES])
+                cylinder (d=LOCK_DIAMETER, h=THIKNES*2);
+            }
+            else {
+                translate ([0,TABLET_HEIGTH-TABLET_BACK_FRAME,-THIKNES])
+                    frameHoles ();
+            }
         }
         translate ([0,THIKNES,-THIKNES]) {
             cube([TABLET_BACK_FRAME+THIKNES,TABLET_BACK_FRAME+THIKNES,THIKNES]);
