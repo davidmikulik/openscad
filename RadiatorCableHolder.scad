@@ -6,21 +6,24 @@
  *   Attribution Non Comercial Share alike license
  */
  
-THIKNES= 4;
-WIDTH=20;
-HEIGTH=30;
+THIKNES= 2;
+WIDTH=15;
+HEIGTH=10;
 
-DIAMETER=20;
+DIAMETER=15;
+CORNER=true;
 
 cube([WIDTH,HEIGTH,THIKNES]);
-translate ([WIDTH/2,WIDTH/2,DIAMETER-THIKNES*2.5]) {
-    rotate([90,0,0]) {
+if (CORNER) 
+    cube([THIKNES, HEIGTH,WIDTH]);
+translate ([DIAMETER/2,HEIGTH,DIAMETER/2]) {
+    rotate([90,CORNER?45:0,0]) {
         difference () {
-            cylinder(d=DIAMETER,h=WIDTH/2, $fn=100);
-            cylinder(d=DIAMETER-THIKNES*2,h=WIDTH/2, $fn=100);
+            cylinder(d=DIAMETER,h=HEIGTH, $fn=100);
+            cylinder(d=DIAMETER-THIKNES*2,h=HEIGTH, $fn=100);
         translate ([-THIKNES,0,0]) 
             cube([THIKNES*2,WIDTH,WIDTH]);
-        translate ([-WIDTH/2,THIKNES*1.2,WIDTH/10]) 
+        translate ([-WIDTH/2,WIDTH/4,THIKNES]) 
             cube([WIDTH,THIKNES/2,WIDTH/3]);
         }
 

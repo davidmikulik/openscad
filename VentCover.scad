@@ -6,15 +6,16 @@
  *   Attribution Non Comercial Share alike license
  */
  
-$fn=100;
-WITH_FAN=1;
-THIKNES=4;
+$fn=200;
+WITH_FAN=0;
+THIKNES=5.3;
+WITH_TUBE_FAN=1;
 
-WIDTH=143; //151
-HEIGHT=151; //143
+WIDTH=220;//143; //151
+HEIGHT=180;//151; //143
 
-VENT_WIDTH = 111;
-VENT_HEIGHT = 103;
+VENT_WIDTH = 205;
+VENT_HEIGHT = 125;
 VENT_LAMELLA_WIDTH=10;
 VENT_LAMELLA_ROTATE=30;
 VENT_LAMELA_THIKNES=2;
@@ -26,26 +27,47 @@ FAN_SCREW_DIAMETER=2;
 FAN_SCREW_MOVE=5;
 FAN_WIDTH=60;
 
-VENT_COUNT=VENT_HEIGHT/(VENT_LAMELLA_WIDTH+VENT_HOLE_SPACE);
+TUBE_FAN_DIAMETER = 123+THIKNES;
+TUBE_FAN_HEIGHT = 80;
 
-difference () {
-    cube([WIDTH, HEIGHT, THIKNES]);
-    translate ([(WIDTH-VENT_WIDTH)/2,(HEIGHT-VENT_HEIGHT)/2,0]) {
-        cube([VENT_WIDTH, VENT_HEIGHT, THIKNES]);
-    }
-}
-    for (i = [0:VENT_COUNT]) {
-        translate ([(WIDTH-VENT_WIDTH)/2,i*(VENT_LAMELLA_WIDTH+VENT_HOLE_SPACE)+LAMELA_MOVE,0]) {
-            rotate ([VENT_LAMELLA_ROTATE,0,0]) {
-            cube([VENT_WIDTH, VENT_LAMELLA_WIDTH-VENT_HOLE_SPACE*1.5, VENT_LAMELA_THIKNES]);
+ONLY_TUBE=1;
+
+VENT_COUNT=VENT_HEIGHT/(VENT_LAMELLA_WIDTH+VENT_HOLE_SPACE);
+if (!ONLY_TUBE) {
+    difference () {
+        cube([WIDTH, HEIGHT, THIKNES]);
+        if (WITH_TUBE_FAN) {
+            translate ([(WIDTH)/2,(HEIGHT)/2,0]) {
+            cylinder (d=TUBE_FAN_DIAMETER, h=VENT_LAMELLA_WIDTH);
             }
         }
-    if (WITH_FAN) {
-        fan ();
-    }
-        
-}
+        //else
+        {   translate ([(WIDTH-VENT_WIDTH)/2,(HEIGHT-VENT_HEIGHT)/2,0]) {
+            cube([VENT_WIDTH, VENT_HEIGHT, THIKNES]);
 
+            }
+        }
+
+    }
+        for (i = [0:VENT_COUNT]) {
+            translate ([(WIDTH-VENT_WIDTH)/2,i*(VENT_LAMELLA_WIDTH+VENT_HOLE_SPACE)+LAMELA_MOVE,0]) {
+                rotate ([VENT_LAMELLA_ROTATE,0,0]) {
+                cube([VENT_WIDTH, VENT_LAMELLA_WIDTH-VENT_HOLE_SPACE*1.5, VENT_LAMELA_THIKNES]);
+                }
+            }
+        if (WITH_FAN) {
+            fan ();
+        }
+        if (WITH_TUBE_FAN) {
+            tubeFan();
+        }
+            
+    }
+}
+else 
+{
+    tubeFan();
+}
 module fan() {
     translate ([(WIDTH-FAN_WIDTH)/2,(HEIGHT-FAN_WIDTH)/2,0]) {
         difference () {
@@ -59,4 +81,14 @@ module fan() {
             translate ([FAN_SCREW_MOVE,FAN_WIDTH-FAN_SCREW_MOVE,0]) {cylinder (d=FAN_SCREW_DIAMETER, h=THIKNES);}
         }
     }
+}
+
+module tubeFan() {
+        translate ([(WIDTH)/2,(HEIGHT)/2,0]) {
+            difference () 
+            {
+                cylinder (d=TUBE_FAN_DIAMETER+THIKNES, h=TUBE_FAN_HEIGHT);
+                cylinder (d=TUBE_FAN_DIAMETER, h=TUBE_FAN_HEIGHT);        
+            }
+        }
 }

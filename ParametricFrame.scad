@@ -8,30 +8,39 @@
 include <BOSL/constants.scad>
 use <BOSL/shapes.scad>
 
-WIDTH=114;
-HEIGTH=104;
+WIDTH=134;
+HEIGTH=100;
 THIKNES=10;
 FRAME_PART_WITH=20;
+FRAME=0;
+BACKGROUND=1;
 
-
-difference () 
+if (BACKGROUND) 
 {
-    union () {
-        framePart("RIGHT");
-        framePart("BOTTOM");
-        framePart("TOP");
-        framePart("LEFT");
-    }
-    translate ([FRAME_PART_WITH*1.25, -WIDTH/2+FRAME_PART_WITH*.75,0])
-    cube ([HEIGTH,WIDTH,THIKNES-THIKNES/2]);
+    translate ([0,WIDTH,0])
+    cube([HEIGTH,WIDTH,THIKNES-THIKNES/2-2]);
 }
-translate ([FRAME_PART_WITH-14,0,0])
-    hook ();
+if (FRAME)
+{
+    difference () 
+    {
+        union () {
+            framePart("RIGHT");
+            framePart("BOTTOM");
+            framePart("TOP");
+            framePart("LEFT");
+        }
+        translate ([FRAME_PART_WITH*1.25, -WIDTH/2+FRAME_PART_WITH*.75,0])
+        cube ([HEIGTH,WIDTH,THIKNES-THIKNES/2]);
+    }
+    translate ([FRAME_PART_WITH-18,10,0])
+        hook ();
+}
 module hook () {
     difference () {
-    cube ([10,20,THIKNES/2]);
+    cube ([20,20,THIKNES/2]);
     translate ([2,5,0])
-    cube ([4,10,THIKNES/2]);
+    cube ([10,10,THIKNES/2]);
     }
 }
 module framePart(part) {

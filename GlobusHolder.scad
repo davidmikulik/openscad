@@ -12,6 +12,7 @@ THIKNES=10;
 SIZE=220;
 GLOBUS_HOLE=3;
 
+$fn = 100;
 //holder ();
 distance ();
 
